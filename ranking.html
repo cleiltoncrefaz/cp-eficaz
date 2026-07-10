@@ -383,29 +383,37 @@
 
     <!-- Planilha -->
     <section id="ranking" style="align-content: center;">
-        
-            <style>
 
-                #ranking {
-                    height: fit-content;
-                    min-height: 80vh;
-                }
+        <style>
+            #ranking {
+                height: fit-content;
+                min-height: 80vh;
+            }
 
-                #ranking h1 {
-                    color: var(--azul-crefaz);
-                    padding: 0;
-                    margin: 0;
-                }
+            #ranking h1 {
+                color: var(--azul-crefaz);
+                padding: 0;
+                margin: 0;
+            }
 
-                .planilha {
-                    width: 100%;
-                    min-height: 500px;
-                }
-            </style>
+            .planilha {
+                width: 100%;
+                min-height: 500px;
+                border: none;
+                border-radius: 10px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .planilha #top-bar {
+                display: none !important;
+            }
+        </style>
         <div class="container">
             <h1>Ranking Eficaz</h1>
 
-                <iframe class="planilha" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJx01dxjE2dJDdUTcF-ya1199_CKNRp7Q3iRJyTpGCbnmYVYEu8jYGsQDUpYLjEXZwSmWDJObBHVq/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+            <iframe class="planilha"
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJx01dxjE2dJDdUTcF-ya1199_CKNRp7Q3iRJyTpGCbnmYVYEu8jYGsQDUpYLjEXZwSmWDJObBHVq/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 
         </div>
 
