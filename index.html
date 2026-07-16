@@ -511,7 +511,7 @@
         </div>
     </section>
 
-    <!-- Cards -->
+   <!-- Cards -->
     <section id="vantage-cards">
         <style>
             #vantage-cards {
@@ -537,12 +537,16 @@
 
             .vantage-container {
                 display: flex;
-                gap: 20px;
-                overflow-x: auto;
+                width: 100%;
                 max-width: 1100px;
                 margin: 0 auto;
+
+                overflow-x: auto;
                 scroll-behavior: smooth;
+                scroll-snap-type: x mandatory;
+
                 scrollbar-width: none;
+                overscroll-behavior-x: contain;
             }
 
             .vantage-container::-webkit-scrollbar {
@@ -551,15 +555,16 @@
 
             .vantage-carrossel {
                 display: flex;
-                justify-content: center;
-                align-items: center;
+                align-items: stretch;
+                justify-content: flex-start;
+
                 gap: 20px;
                 padding: 30px;
             }
 
             /* Carrossel Botões*/
 
-            .arrow-cards{
+            .arrow-cards {
                 position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
@@ -589,13 +594,33 @@
             }
 
             .content-card {
+                flex: 0 0 260px;
+                width: 260px;
+                min-height: 300px;
+
                 background: #ffffff;
                 border-radius: 30px;
                 padding: 20px;
                 position: relative;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-                width: 260px;
-                height: stretch;
+
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+
+                opacity: 0.8;
+                transform: scale(0.95);
+
+                transition:
+                    opacity 0.35s ease,
+                    transform 0.35s ease,
+                    box-shadow 0.35s ease;
+
+                box-shadow: 0 8px 24px rgba(22, 48, 86, 0.07);
+            }
+
+            .content-card.active {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0px 1px 40px rgb(17 47 91 / 7%);
             }
 
             .card-icon {
@@ -646,19 +671,71 @@
             @media (max-width: 767px) {
                 #vantage-cards {
                     overflow: hidden;
-                    padding: 40px 20px;
+                    padding: 40px 0;
+                }
+
+                #vantage-cards .intro {
+                    padding: 0 20px;
                 }
 
                 .vantage-wrapper {
                     width: 100%;
+                    max-width: 100%;
+                }
+
+                .vantage-container {
+                    width: 100%;
+                    max-width: 100%;
+
+                    /*
+         * Cria espaço para o primeiro e o último card
+         * também conseguirem ficar centralizados.
+         */
+                    padding-inline:
+                        calc((100% - 260px) / 2);
+
+                    scroll-padding-inline:
+                        calc((100% - 260px) / 2);
+                }
+
+                .vantage-carrossel {
+                    gap: 16px;
+                    padding: 30px 0;
                 }
 
                 .content-card {
+                    flex-basis: 260px;
                     width: 260px;
-                    min-height: 300px;
+                    min-width: 260px;
+                    min-height: 320px;
+
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                }
+
+                .content-card:not(.active) {
+                    opacity: 0.6;
+                    transform: scale(0.88);
+                }
+
+                .content-card.active {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                .arrow-cards {
+                    top: 50%;
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .arrow-cards.left {
+                    left: 8px;
+                }
+
+                .arrow-cards.right {
+                    right: 8px;
                 }
             }
         </style>
@@ -797,23 +874,146 @@
 
         <script>
             const carousel = document.querySelector(".vantage-container");
+            const carouselTrack = document.querySelector(".vantage-carrossel");
+            const cards = Array.from(
+                carousel.querySelectorAll(".content-card")
+            );
+
             const nextStep = document.getElementById("nextStep");
             const prevStep = document.getElementById("prevStep");
 
-            const scrollAmount = 280;
+            let atualCard = 0;
+            let scrollTimer = null;
+
+            function centralizarCard(index, smooth = true) {
+                if (!cards.length) return;
+
+                atualCard = Math.max(
+                    0,
+                    Math.min(index, cards.length - 1)
+                );
+
+                const card = cards[atualCard];
+
+                const cardCenter =
+                    card.offsetLeft + card.offsetWidth / 2;
+
+                const containerCenter =
+                    carousel.clientWidth / 2;
+
+                const targetScroll =
+                    cardCenter - containerCenter;
+
+                carousel.scrollTo({
+                    left: targetScroll,
+                    behavior: smooth ? "smooth" : "auto"
+                });
+
+                atualizarEstado();
+            }
+
+            function atualizarEstado() {
+                cards.forEach((card, index) => {
+                    const active = index === atualCard;
+
+                    card.classList.toggle("active", active);
+                    card.setAttribute(
+                        "aria-hidden",
+                        active ? "false" : "true"
+                    );
+                });
+
+                prevStep.disabled = atualCard === 0;
+
+                nextStep.disabled =
+                    atualCard === cards.length - 1;
+
+                prevStep.setAttribute(
+                    "aria-disabled",
+                    String(prevStep.disabled)
+                );
+
+                nextStep.setAttribute(
+                    "aria-disabled",
+                    String(nextStep.disabled)
+                );
+            }
+
+            function encontrarCardMaisProximo() {
+                const containerCenter =
+                    carousel.scrollLeft +
+                    carousel.clientWidth / 2;
+
+                let nearestIndex = 0;
+                let nearestDistance = Infinity;
+
+                cards.forEach((card, index) => {
+                    const cardCenter =
+                        card.offsetLeft +
+                        card.offsetWidth / 2;
+
+                    const distance =
+                        Math.abs(cardCenter - containerCenter);
+
+                    if (distance < nearestDistance) {
+                        nearestDistance = distance;
+                        nearestIndex = index;
+                    }
+                });
+
+                return nearestIndex;
+            }
 
             nextStep.addEventListener("click", () => {
-                carousel.scrollBy({
-                    left: scrollAmount,
-                    behavior: "smooth"
-                });
+                if (atualCard >= cards.length - 1) return;
+
+                centralizarCard(atualCard + 1);
             });
 
             prevStep.addEventListener("click", () => {
-                carousel.scrollBy({
-                    left: -scrollAmount,
-                    behavior: "smooth"
-                });
+                if (atualCard <= 0) return;
+
+                centralizarCard(atualCard - 1);
+            });
+
+            /*
+             * Atualiza o card ativo quando a pessoa arrastar
+             * com o dedo ou usar trackpad/mouse.
+             */
+            carousel.addEventListener("scroll", () => {
+                clearTimeout(scrollTimer);
+
+                scrollTimer = setTimeout(() => {
+                    const nearestIndex =
+                        encontrarCardMaisProximo();
+
+                    if (nearestIndex !== atualCard) {
+                        atualCard = nearestIndex;
+                        atualizarEstado();
+                    }
+                }, 100);
+            }, {
+                passive: true
+            });
+
+            /*
+             * Recalcula o centro quando a tela muda de tamanho.
+             */
+            window.addEventListener("resize", () => {
+                clearTimeout(scrollTimer);
+
+                scrollTimer = setTimeout(() => {
+                    centralizarCard(atualCard, false);
+                }, 150);
+            });
+
+            /*
+             * Configuração inicial.
+             */
+            atualizarEstado();
+
+            window.addEventListener("load", () => {
+                centralizarCard(0, false);
             });
         </script>
 
@@ -1207,7 +1407,6 @@
         <!----------------------------------------------------------------------->
 
     </section>
-
     <!--Jornada-->
     <section id="journey">
         <style>
