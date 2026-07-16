@@ -529,7 +529,7 @@
                 display: flex;
                 gap: 16px;
                 justify-content: center;
-                flex-wrap: wrap;
+                flex-wrap: balance;
             }
 
             .content-card {
@@ -599,6 +599,7 @@
             }
 
             /* Responsivo */
+          
             @media (max-width: 768px) {
                 .plans-container {
                     flex-direction: column;
@@ -611,7 +612,6 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    flex-wrap: nowrap;
                 }
             }
         </style>
@@ -1501,49 +1501,6 @@
             updateJourneyCarousel();
             startAutoplay();
         </script>
-    </section>
-
-    <!-- Banner evolução -->
-    <section hidden id="bannerEvolution">
-        <style>
-            #bannerEvolution {
-                background: #fff;
-                padding: 0px 0 50px 0;
-            }
-
-            .text-wrapper {
-                background: var(--azul-crefaz);
-                width: 900px;
-                padding: 20px 40px;
-                border-radius: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                max-width: fit-content;
-                margin: 0 auto;
-                gap: 20px;
-            }
-
-            #bannerEvolution h4 {
-                margin: 0;
-                color: #fff
-            }
-
-            @media (max-width: 767px) {
-                .text-wrapper {
-                    flex-direction: column;
-                    text-align: center;
-                    padding: 0 20px;
-                }
-            }
-        </style>
-
-        <div class="container">
-            <div class="text-wrapper">
-                <h4>Fique por dentro das <strong>últimas atualizações!</strong></h4>
-                <a class="btn btn-secondary" href="#">Acesse o ranking completo</a>
-            </div>
-        </div>
     </section>
 
     <!-- Treinamento -->
