@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eficaz | Programa de excelência da Crefaz</title>
 
-    <link rel="shortcut icon" href="assets/favicon-crefaz.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/favicon-crefaz-512px.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/font-anteb.css">
 
 </head>
@@ -31,8 +31,6 @@
     html {
         scroll-behavior: smooth;
     }
-
-
 
     * {
         box-sizing: border-box;
@@ -452,29 +450,61 @@
             </div>
 
             <div class="ranking-tabs" role="tablist" aria-label="Período do ranking">
-                <button type="button" class="ranking-tab active" id="tabAnual" role="tab" aria-selected="true"
-                    aria-controls="rankingAnual" data-ranking-tab="rankingAnual">
-                    Anual
+                <button type="button" class="ranking-tab active" id="tabCorban" role="tab" aria-selected="true"
+                    aria-controls="rankingCorban" data-ranking-tab="rankingCorban">
+                    Corban
                 </button>
 
-                <button type="button" class="ranking-tab" id="tabMensal" role="tab" aria-selected="false"
-                    aria-controls="rankingMensal" data-ranking-tab="rankingMensal">
-                    Mensal
+                <button type="button" class="ranking-tab" id="tabCDC" role="tab" aria-selected="false"
+                    aria-controls="rankingCDC" data-ranking-tab="rankingCDC">
+                    CDC
+                </button>
+
+                <button type="button" class="ranking-tab" id="tabCFZ" role="tab" aria-selected="true"
+                    aria-controls="rankingCFZ" data-ranking-tab="rankingCFZ">
+                    CFZ Lojas
+                </button>
+
+                <button type="button" class="ranking-tab" id="tabInterno" role="tab" aria-selected="true"
+                    aria-controls="rankingInterno" data-ranking-tab="rankingInterno">
+                    Canal interno
                 </button>
             </div>
 
             <div class="ranking-content">
 
-                <div class="ranking-panel active" id="rankingAnual" role="tabpanel" aria-labelledby="tabAnual">
+                <div class="ranking-panel active" id="rankingCorban" role="tabpanel" aria-labelledby="tabCorban">
                     <div class="planilha">
-                            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRaqofXEe7VfI4i_-spfNzouiEOaGZ45pm0VYSQJakW33C_tUFf8u_4XH0i3FczoYIpmiS5s4L5_0Yd/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" title="Ranking anual Eficaz" loading="eager"></iframe>
+                        <iframe
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT2plp5pKLfie10iwP0JmUcp-0bkeAwf1O2XVHp3IC78iJRCwpOxHF9PRGL7A9KrC2kKUcxFpICqscg/pubhtml?gid=1331015409&amp;single=true&amp;widget=true&amp;headers=false"
+                            title="Ranking Corban Eficaz" loading="eager"></iframe>
                     </div>
                 </div>
 
-                <div class="ranking-panel" id="rankingMensal" role="tabpanel" aria-labelledby="tabMensal" hidden>
+                <div class="ranking-panel" id="rankingCDC" role="tabpanel" aria-labelledby="tabCDC" hidden>
 
                     <div class="planilha">
-                            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRaqofXEe7VfI4i_-spfNzouiEOaGZ45pm0VYSQJakW33C_tUFf8u_4XH0i3FczoYIpmiS5s4L5_0Yd/pubhtml?gid=717015391&amp;single=true&amp;widget=true&amp;headers=false" title="Ranking mensal Eficaz" loading="lazy"></iframe>
+                        <iframe
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT2plp5pKLfie10iwP0JmUcp-0bkeAwf1O2XVHp3IC78iJRCwpOxHF9PRGL7A9KrC2kKUcxFpICqscg/pubhtml?gid=2097331612&amp;single=true&amp;widget=true&amp;headers=false"
+                            title="Ranking CDC Eficaz" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <div class="ranking-panel" id="rankingCFZ" role="tabpanel" aria-labelledby="tabCFZ" hidden>
+
+                    <div class="planilha">
+                        <iframe
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT2plp5pKLfie10iwP0JmUcp-0bkeAwf1O2XVHp3IC78iJRCwpOxHF9PRGL7A9KrC2kKUcxFpICqscg/pubhtml?gid=397212322&amp;single=true&amp;widget=true&amp;headers=false"
+                            title="Ranking CFZ Eficaz" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <div class="ranking-panel" id="rankingInterno" role="tabpanel" aria-labelledby="tabInterno" hidden>
+
+                    <div class="planilha">
+                        <iframe
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT2plp5pKLfie10iwP0JmUcp-0bkeAwf1O2XVHp3IC78iJRCwpOxHF9PRGL7A9KrC2kKUcxFpICqscg/pubhtml?gid=852756287&amp;single=true&amp;widget=true&amp;headers=false"
+                            title="Ranking Interno Eficaz" loading="lazy"></iframe>
                     </div>
                 </div>
 
